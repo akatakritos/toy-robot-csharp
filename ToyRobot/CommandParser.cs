@@ -5,29 +5,37 @@ using System.Text.RegularExpressions;
 
 namespace ToyRobot
 {
+    /// <summary>
+    /// Command Parser turns string commands into strongly typed objects we can work
+    /// with at higher levels.
+    /// </summary>
     public static class CommandParser
     {
+        /// <summary>
+        /// Parse a command string into a strongly typed <see cref="Command"/> object.
+        /// </summary>
+        /// <exception cref="FormatException">The string is not recognized as a command</exception>
+        /// <param name="input">The command string</param>
+        /// <returns></returns>
         public static Command Parse(string input)
         {
             if (input == null)
                 throw new ArgumentNullException(nameof(input));
 
             if (input.StartsWith("PLACE ", StringComparison.InvariantCultureIgnoreCase))
-            {
                 return ParsePlaceCommand(input);
-            }
 
             if (input == "MOVE")
-                return new MoveCommand();
+                return MoveCommand.Instance;
 
             if (input == "LEFT")
-                return new TurnCommand(TurnDirection.Left);
+                return TurnCommand.LeftInstance;
 
             if (input == "RIGHT")
-                return new TurnCommand(TurnDirection.Right);
+                return TurnCommand.RightInstance;
 
             if (input == "REPORT")
-                return new ReportCommand();
+                return ReportCommand.Instance;
 
             throw new FormatException($"Unrecognized command '{input}'");
         }

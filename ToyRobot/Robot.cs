@@ -4,24 +4,60 @@ using System.Linq;
 
 namespace ToyRobot
 {
+    /// <summary>
+    /// Represents a robot on a board
+    /// </summary>
     public class Robot
     {
         private readonly int _boardWidth;
         private readonly int _boardHeight;
+
+        /// <summary>
+        /// Gets the robot's current X coordinate
+        /// </summary>
         public int X { get; private set; } = -1;
+
+        /// <summary>
+        /// Gets the robot's current Y coordinate
+        /// </summary>
         public int Y { get; private set; } = -1;
+
+        /// <summary>
+        /// Gets the robot's current bearing
+        /// </summary>
         public Direction Facing { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a handler through which the robot can emit REPORT data
+        /// </summary>
         public Action<string> OnReport { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating if the robot has been placed on the board
+        /// </summary>
         public bool IsPlaced { get; private set; }
 
+        /// <summary>
+        /// Gets or sets a handler through which the robot can emit log messages
+        /// </summary>
         public Action<string> Log { get; set; }
 
+        /// <summary>
+        /// Constructs a new instance of the Robot class
+        /// </summary>
+        /// <param name="boardWidth">The width of the board in which the robot will be placed</param>
+        /// <param name="boardHeight">The height of the board in which the robot will be placed</param>
         public Robot(int boardWidth, int boardHeight)
         {
             _boardWidth = boardWidth;
             _boardHeight = boardHeight;
         }
 
+        /// <summary>
+        /// Executes a single <see cref="Command"/>
+        /// </summary>
+        /// <param name="cmd">The <see cref="Command"/> to execute</param>
+        /// <returns>A value indicating if the command was successfully processed.</returns>
         public bool ExecuteCommand(Command cmd)
         {
             switch (cmd)
