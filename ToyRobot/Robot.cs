@@ -107,16 +107,17 @@ namespace ToyRobot
             if (!IsPlaced)
                 return NotPlaced();
 
-            var delta = GetDelta(Facing);
+            var (dx, dy) = GetDelta(Facing);
 
-            if (!IsOnBoard(X + delta.dx, Y + delta.dy))
+            if (!IsOnBoard(X + dx, Y + dy))
             {
                 EmitLog("Destination off board. Command ignored.");
                 return false;
             }
 
-            X = X + delta.dx;
-            Y = Y + delta.dy;
+
+            X = X + dx;
+            Y = Y + dy;
 
             EmitLog($"Moved to ({X},{Y})");
             return true;
